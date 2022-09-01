@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Move issue to ${{ env.todo }}
         uses: leonsteinhaeuser/project-beta-automations@v1.3.0
+        env:
+          DEBUG_COMMANDS: true
+          DEBUG_LOG: true
         with:
           gh_token: ${{ secrets.app_pem }}
           organization: angel-tah
