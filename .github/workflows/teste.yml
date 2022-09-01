@@ -12,4 +12,4 @@ jobs:
         with:
           project: Projeto
           column: New
-          repo-token: ${{ secrets.my_token_2 }}
+          repo-token: ${{ secrets.my_token_repo }}
