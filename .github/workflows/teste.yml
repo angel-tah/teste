@@ -22,7 +22,7 @@ jobs:
           DEBUG_COMMANDS: true
           DEBUG_LOG: true
         with:
-          gh_token: ${{ secrets.app_pem }}
+          gh_app_secret_key: ${{ secrets.app_pem }}
           organization: angel-tah
           project_id: 1
           status_value: ${{ env.todo }} 
