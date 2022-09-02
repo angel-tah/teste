@@ -13,12 +13,11 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }}
-          
+          run:
+             echo 'PROJECT_ID='$(jq 'steps.get_token.outputs.app_token') >> $GITHUB_ENV 
     
       - name: Get project data
         env:
-          APP_PEM: ${{ secrets.app_pem }}
-          APP_IG: ${{ secrets.app_id }}
           GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
           ORGANIZATION: "angel-tah"
           PROJECT_NUMBER: 1
