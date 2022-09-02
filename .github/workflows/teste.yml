@@ -7,24 +7,19 @@ jobs:
   track_issue: 
     runs-on: ubuntu-latest
     steps:
-    
-      - name: Get token
-        id: get_token
-        uses: machine-learning-apps/actions-app-token@master
+      - name: Generate token
+        id: generate_token
+        uses: tibdex/github-app-token@36464acb844fc53b9b8b2401da68844f6b05ebb0
         with:
-          APP_PEM: ${{ secrets.APP_PEM }}
-          APP_ID: ${{ secrets.APP_ID }}
-      
-      - name: Get App Installation Token
-        run: |
-          echo "This token is masked: ${TOKEN}"
-        env: 
-          GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PEM }}
+          
     
       - name: Get project data
         env:
           APP_PEM: ${{ secrets.app_pem }}
           APP_IG: ${{ secrets.app_id }}
+          GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
           ORGANIZATION: "angel-tah"
           PROJECT_NUMBER: 1
         run: |
@@ -60,7 +55,7 @@ jobs:
 
       - name: Add issue to project
         env:
-          GH_TOKEN: ${{ secrets.my_token_2 }}
+          GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
           PR_ID: ${{ github.event.issue.node_id }}
         run: |
           item_id="$( gh api graphql -f query='
@@ -79,7 +74,7 @@ jobs:
 
       - name: Set fields
         env:
-          GH_TOKEN: ${{ secrets.my_token_2 }}
+          GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
         run: |
           gh api graphql -f query='
             mutation (
