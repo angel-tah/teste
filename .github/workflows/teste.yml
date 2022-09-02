@@ -9,7 +9,8 @@ jobs:
     steps:
       - name: Get project data
         env:
-          GH_TOKEN: ${{ secrets.my_token_2 }}
+          APP_PEM: ${{ secrets.app_pem }}
+          APP_IG: ${{ secrets.app_id }}
           ORGANIZATION: "angel-tah"
           PROJECT_NUMBER: 1
         run: |
