@@ -13,17 +13,20 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PEM }}
-           
-    
+      
+      - name: Get App Installation Token
+        run: |
+          echo "This token is masked: ${TOKEN}"
+        env: 
+          TOKEN: ${{ steps.get_token.outputs.app_token }}     
+            
+      
       - name: Get project data
         env:
           GH_TOKEN: ${{ steps.get_token.outputs.app_token }}
           ORGANIZATION: "angel-tah"
           PROJECT_NUMBER: 1
-        
-        run: |
-          echo "DATE=$(jq 'steps.get_token.outputs.app_token')" >> $GITHUB_ENV 
-          
+        run: |          
           gh api graphql -f query='
             query($org: String!, $number: Int!) {
               organization(login: $org){
